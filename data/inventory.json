@@ -18,7 +18,63 @@
       "streetViewHeading": 270,
       "geopathId": "TBD",
       "notes": "",
-      "sellsheet": null
+      "sellsheet": null,
+      "nearbyPOIs": {
+        "totalPOIs": 0,
+        "radius": 150,
+        "pois": {
+          "cafe": {
+            "label": "Coffee Shops",
+            "count": 0,
+            "places": []
+          },
+          "restaurant": {
+            "label": "Restaurants",
+            "count": 0,
+            "places": []
+          },
+          "bar": {
+            "label": "Bars",
+            "count": 0,
+            "places": []
+          },
+          "gym": {
+            "label": "Gyms",
+            "count": 0,
+            "places": []
+          },
+          "movie_theater": {
+            "label": "Cinemas",
+            "count": 0,
+            "places": []
+          },
+          "stadium": {
+            "label": "Stadiums",
+            "count": 0,
+            "places": []
+          },
+          "school": {
+            "label": "Schools",
+            "count": 0,
+            "places": []
+          },
+          "lodging": {
+            "label": "Hotels",
+            "count": 0,
+            "places": []
+          },
+          "shopping_mall": {
+            "label": "Shopping",
+            "count": 0,
+            "places": []
+          },
+          "transit_station": {
+            "label": "Transit",
+            "count": 0,
+            "places": []
+          }
+        }
+      }
     },
     {
       "id": "AC-415",
@@ -37,8 +93,64 @@
       "image": "/images/units/AC-415.jpeg",
       "streetViewHeading": 90,
       "geopathId": "30640518",
-      "notes": "Heavy inbound casino traffic and longest viewing distance approaching the drawbridge on Route 30, heading towards Atlantic City\u2019s Harbor Casino area. This sign is higher than all the other signs in the area and stands out above the rest, making it a primary gateway to Atlantic City r",
-      "sellsheet": "/sellsheets/AC - Bulletin 415.pdf"
+      "notes": "Heavy inbound casino traffic and longest viewing distance approaching the drawbridge on Route 30, heading towards Atlantic City’s Harbor Casino area. This sign is higher than all the other signs in the area and stands out above the rest, making it a primary gateway to Atlantic City r",
+      "sellsheet": "/sellsheets/AC - Bulletin 415.pdf",
+      "nearbyPOIs": {
+        "totalPOIs": 0,
+        "radius": 150,
+        "pois": {
+          "cafe": {
+            "label": "Coffee Shops",
+            "count": 0,
+            "places": []
+          },
+          "restaurant": {
+            "label": "Restaurants",
+            "count": 0,
+            "places": []
+          },
+          "bar": {
+            "label": "Bars",
+            "count": 0,
+            "places": []
+          },
+          "gym": {
+            "label": "Gyms",
+            "count": 0,
+            "places": []
+          },
+          "movie_theater": {
+            "label": "Cinemas",
+            "count": 0,
+            "places": []
+          },
+          "stadium": {
+            "label": "Stadiums",
+            "count": 0,
+            "places": []
+          },
+          "school": {
+            "label": "Schools",
+            "count": 0,
+            "places": []
+          },
+          "lodging": {
+            "label": "Hotels",
+            "count": 0,
+            "places": []
+          },
+          "shopping_mall": {
+            "label": "Shopping",
+            "count": 0,
+            "places": []
+          },
+          "transit_station": {
+            "label": "Transit",
+            "count": 0,
+            "places": []
+          }
+        }
+      }
     },
     {
       "id": "AC-416",
@@ -58,7 +170,63 @@
       "streetViewHeading": 270,
       "geopathId": "30640519",
       "notes": "",
-      "sellsheet": "/sellsheets/AC - Bulletin 416.pdf"
+      "sellsheet": "/sellsheets/AC - Bulletin 416.pdf",
+      "nearbyPOIs": {
+        "totalPOIs": 0,
+        "radius": 150,
+        "pois": {
+          "cafe": {
+            "label": "Coffee Shops",
+            "count": 0,
+            "places": []
+          },
+          "restaurant": {
+            "label": "Restaurants",
+            "count": 0,
+            "places": []
+          },
+          "bar": {
+            "label": "Bars",
+            "count": 0,
+            "places": []
+          },
+          "gym": {
+            "label": "Gyms",
+            "count": 0,
+            "places": []
+          },
+          "movie_theater": {
+            "label": "Cinemas",
+            "count": 0,
+            "places": []
+          },
+          "stadium": {
+            "label": "Stadiums",
+            "count": 0,
+            "places": []
+          },
+          "school": {
+            "label": "Schools",
+            "count": 0,
+            "places": []
+          },
+          "lodging": {
+            "label": "Hotels",
+            "count": 0,
+            "places": []
+          },
+          "shopping_mall": {
+            "label": "Shopping",
+            "count": 0,
+            "places": []
+          },
+          "transit_station": {
+            "label": "Transit",
+            "count": 0,
+            "places": []
+          }
+        }
+      }
     },
     {
       "id": "AC-417",
@@ -78,7 +246,63 @@
       "streetViewHeading": 90,
       "geopathId": "30640516",
       "notes": "Heavy inbound casino traffic, at the top of the drawbridge on Route 30, a primary gateway to Atlantic City for East Coast visitors, casino employees and the general public. This sign has great visibility, reaching travelers coming from the New York/North Jersey markets via the Garden",
-      "sellsheet": "/sellsheets/AC - Bulletin 417.pdf"
+      "sellsheet": "/sellsheets/AC - Bulletin 417.pdf",
+      "nearbyPOIs": {
+        "totalPOIs": 0,
+        "radius": 150,
+        "pois": {
+          "cafe": {
+            "label": "Coffee Shops",
+            "count": 0,
+            "places": []
+          },
+          "restaurant": {
+            "label": "Restaurants",
+            "count": 0,
+            "places": []
+          },
+          "bar": {
+            "label": "Bars",
+            "count": 0,
+            "places": []
+          },
+          "gym": {
+            "label": "Gyms",
+            "count": 0,
+            "places": []
+          },
+          "movie_theater": {
+            "label": "Cinemas",
+            "count": 0,
+            "places": []
+          },
+          "stadium": {
+            "label": "Stadiums",
+            "count": 0,
+            "places": []
+          },
+          "school": {
+            "label": "Schools",
+            "count": 0,
+            "places": []
+          },
+          "lodging": {
+            "label": "Hotels",
+            "count": 0,
+            "places": []
+          },
+          "shopping_mall": {
+            "label": "Shopping",
+            "count": 0,
+            "places": []
+          },
+          "transit_station": {
+            "label": "Transit",
+            "count": 0,
+            "places": []
+          }
+        }
+      }
     },
     {
       "id": "AC-418",
@@ -88,7 +312,7 @@
       "address": "Address TBD",
       "lat": 39.37745826,
       "lng": -74.45365638,
-      "size": "14\u2019H x 48\u2019W",
+      "size": "14’H x 48’W",
       "facing": "East",
       "illuminated": false,
       "digital": false,
@@ -98,7 +322,63 @@
       "streetViewHeading": 270,
       "geopathId": "30640517",
       "notes": "",
-      "sellsheet": "/sellsheets/AC - Bulletin 418.pdf"
+      "sellsheet": "/sellsheets/AC - Bulletin 418.pdf",
+      "nearbyPOIs": {
+        "totalPOIs": 0,
+        "radius": 150,
+        "pois": {
+          "cafe": {
+            "label": "Coffee Shops",
+            "count": 0,
+            "places": []
+          },
+          "restaurant": {
+            "label": "Restaurants",
+            "count": 0,
+            "places": []
+          },
+          "bar": {
+            "label": "Bars",
+            "count": 0,
+            "places": []
+          },
+          "gym": {
+            "label": "Gyms",
+            "count": 0,
+            "places": []
+          },
+          "movie_theater": {
+            "label": "Cinemas",
+            "count": 0,
+            "places": []
+          },
+          "stadium": {
+            "label": "Stadiums",
+            "count": 0,
+            "places": []
+          },
+          "school": {
+            "label": "Schools",
+            "count": 0,
+            "places": []
+          },
+          "lodging": {
+            "label": "Hotels",
+            "count": 0,
+            "places": []
+          },
+          "shopping_mall": {
+            "label": "Shopping",
+            "count": 0,
+            "places": []
+          },
+          "transit_station": {
+            "label": "Transit",
+            "count": 0,
+            "places": []
+          }
+        }
+      }
     },
     {
       "id": "BAL-501D",
@@ -118,7 +398,63 @@
       "streetViewHeading": 180,
       "geopathId": "30640520",
       "notes": "DIGITAL BULLETIN BAL-501D Digital sign showing to I-95 at Toll Plaza, this high visibility bulletin is seen by southbound traffic, on both I-95 and I-895. The bulletin is located within two miles of Downtown Baltimore, with I-95 serving as the main artery to sporting events, museums, shops, and rest",
-      "sellsheet": "/sellsheets/BAL - Bulletin 501D.pdf"
+      "sellsheet": "/sellsheets/BAL - Bulletin 501D.pdf",
+      "nearbyPOIs": {
+        "totalPOIs": 0,
+        "radius": 150,
+        "pois": {
+          "cafe": {
+            "label": "Coffee Shops",
+            "count": 0,
+            "places": []
+          },
+          "restaurant": {
+            "label": "Restaurants",
+            "count": 0,
+            "places": []
+          },
+          "bar": {
+            "label": "Bars",
+            "count": 0,
+            "places": []
+          },
+          "gym": {
+            "label": "Gyms",
+            "count": 0,
+            "places": []
+          },
+          "movie_theater": {
+            "label": "Cinemas",
+            "count": 0,
+            "places": []
+          },
+          "stadium": {
+            "label": "Stadiums",
+            "count": 0,
+            "places": []
+          },
+          "school": {
+            "label": "Schools",
+            "count": 0,
+            "places": []
+          },
+          "lodging": {
+            "label": "Hotels",
+            "count": 0,
+            "places": []
+          },
+          "shopping_mall": {
+            "label": "Shopping",
+            "count": 0,
+            "places": []
+          },
+          "transit_station": {
+            "label": "Transit",
+            "count": 0,
+            "places": []
+          }
+        }
+      }
     },
     {
       "id": "BAL-502",
@@ -128,7 +464,7 @@
       "address": "Address TBD",
       "lat": 39.267165,
       "lng": -76.562583,
-      "size": "14\u2019H x 48\u2019W",
+      "size": "14’H x 48’W",
       "facing": "South",
       "illuminated": false,
       "digital": false,
@@ -137,8 +473,64 @@
       "image": "/images/units/BAL-502.jpeg",
       "streetViewHeading": 0,
       "geopathId": "30640521",
-      "notes": "Showing to I-95, this high visibility bulletin is\nseen by northbound traffic. The bulletin is located \nwithin two miles of downtown Baltimore, with\nI-95 serving as the main artery to sporting events, \nmuseums, shops, and restaurants of Baltimore\u2019s \nInner Harbor.",
-      "sellsheet": "/sellsheets/BAL - Bulletin 502.pdf"
+      "notes": "Showing to I-95, this high visibility bulletin is\nseen by northbound traffic. The bulletin is located \nwithin two miles of downtown Baltimore, with\nI-95 serving as the main artery to sporting events, \nmuseums, shops, and restaurants of Baltimore’s \nInner Harbor.",
+      "sellsheet": "/sellsheets/BAL - Bulletin 502.pdf",
+      "nearbyPOIs": {
+        "totalPOIs": 0,
+        "radius": 150,
+        "pois": {
+          "cafe": {
+            "label": "Coffee Shops",
+            "count": 0,
+            "places": []
+          },
+          "restaurant": {
+            "label": "Restaurants",
+            "count": 0,
+            "places": []
+          },
+          "bar": {
+            "label": "Bars",
+            "count": 0,
+            "places": []
+          },
+          "gym": {
+            "label": "Gyms",
+            "count": 0,
+            "places": []
+          },
+          "movie_theater": {
+            "label": "Cinemas",
+            "count": 0,
+            "places": []
+          },
+          "stadium": {
+            "label": "Stadiums",
+            "count": 0,
+            "places": []
+          },
+          "school": {
+            "label": "Schools",
+            "count": 0,
+            "places": []
+          },
+          "lodging": {
+            "label": "Hotels",
+            "count": 0,
+            "places": []
+          },
+          "shopping_mall": {
+            "label": "Shopping",
+            "count": 0,
+            "places": []
+          },
+          "transit_station": {
+            "label": "Transit",
+            "count": 0,
+            "places": []
+          }
+        }
+      }
     },
     {
       "id": "BAL-503D",
@@ -158,7 +550,63 @@
       "streetViewHeading": 180,
       "geopathId": "30640522",
       "notes": "High visibility to southbound traffic on I-895, the main connector to Route 295/Baltimore Washington Pkwy, I-95 and I-695 Baltimore Beltway, within three miles of downtown, just a few miles from downtown Baltimore at the Lombard Street exit near the Highlandtown Arts & Entertainment District. DC Off",
-      "sellsheet": "/sellsheets/BAL - Bulletin 503D.pdf"
+      "sellsheet": "/sellsheets/BAL - Bulletin 503D.pdf",
+      "nearbyPOIs": {
+        "totalPOIs": 0,
+        "radius": 150,
+        "pois": {
+          "cafe": {
+            "label": "Coffee Shops",
+            "count": 0,
+            "places": []
+          },
+          "restaurant": {
+            "label": "Restaurants",
+            "count": 0,
+            "places": []
+          },
+          "bar": {
+            "label": "Bars",
+            "count": 0,
+            "places": []
+          },
+          "gym": {
+            "label": "Gyms",
+            "count": 0,
+            "places": []
+          },
+          "movie_theater": {
+            "label": "Cinemas",
+            "count": 0,
+            "places": []
+          },
+          "stadium": {
+            "label": "Stadiums",
+            "count": 0,
+            "places": []
+          },
+          "school": {
+            "label": "Schools",
+            "count": 0,
+            "places": []
+          },
+          "lodging": {
+            "label": "Hotels",
+            "count": 0,
+            "places": []
+          },
+          "shopping_mall": {
+            "label": "Shopping",
+            "count": 0,
+            "places": []
+          },
+          "transit_station": {
+            "label": "Transit",
+            "count": 0,
+            "places": []
+          }
+        }
+      }
     },
     {
       "id": "BAL-504D",
@@ -168,7 +616,7 @@
       "address": "Address TBD",
       "lat": 39.29708,
       "lng": -76.54998,
-      "size": "14\u2019H x 48\u2019W",
+      "size": "14’H x 48’W",
       "facing": "South",
       "illuminated": false,
       "digital": false,
@@ -178,7 +626,63 @@
       "streetViewHeading": 0,
       "geopathId": "30640523",
       "notes": "High visibility to northbound traffic on I-895, the \nmain connector to Route 295/Baltimore Washington \nPkwy, I-95 and I-695 Baltimore Beltway, within three \nmiles of downtown, just a few miles from downtown \nBaltimore at the Lombard Street exit near the \nHighlandtown Arts & Entertainment District.",
-      "sellsheet": "/sellsheets/BAL - Bulletin 504D.pdf"
+      "sellsheet": "/sellsheets/BAL - Bulletin 504D.pdf",
+      "nearbyPOIs": {
+        "totalPOIs": 0,
+        "radius": 150,
+        "pois": {
+          "cafe": {
+            "label": "Coffee Shops",
+            "count": 0,
+            "places": []
+          },
+          "restaurant": {
+            "label": "Restaurants",
+            "count": 0,
+            "places": []
+          },
+          "bar": {
+            "label": "Bars",
+            "count": 0,
+            "places": []
+          },
+          "gym": {
+            "label": "Gyms",
+            "count": 0,
+            "places": []
+          },
+          "movie_theater": {
+            "label": "Cinemas",
+            "count": 0,
+            "places": []
+          },
+          "stadium": {
+            "label": "Stadiums",
+            "count": 0,
+            "places": []
+          },
+          "school": {
+            "label": "Schools",
+            "count": 0,
+            "places": []
+          },
+          "lodging": {
+            "label": "Hotels",
+            "count": 0,
+            "places": []
+          },
+          "shopping_mall": {
+            "label": "Shopping",
+            "count": 0,
+            "places": []
+          },
+          "transit_station": {
+            "label": "Transit",
+            "count": 0,
+            "places": []
+          }
+        }
+      }
     },
     {
       "id": "BAL-505",
@@ -198,7 +702,63 @@
       "streetViewHeading": 180,
       "geopathId": "50420723",
       "notes": "This incredible unit shows to southbound traffic on I-95 as well as Hanover Street. It is located at the exit of I-395 & I-295.",
-      "sellsheet": "/sellsheets/BAL - Bulletin 505.pdf"
+      "sellsheet": "/sellsheets/BAL - Bulletin 505.pdf",
+      "nearbyPOIs": {
+        "totalPOIs": 0,
+        "radius": 150,
+        "pois": {
+          "cafe": {
+            "label": "Coffee Shops",
+            "count": 0,
+            "places": []
+          },
+          "restaurant": {
+            "label": "Restaurants",
+            "count": 0,
+            "places": []
+          },
+          "bar": {
+            "label": "Bars",
+            "count": 0,
+            "places": []
+          },
+          "gym": {
+            "label": "Gyms",
+            "count": 0,
+            "places": []
+          },
+          "movie_theater": {
+            "label": "Cinemas",
+            "count": 0,
+            "places": []
+          },
+          "stadium": {
+            "label": "Stadiums",
+            "count": 0,
+            "places": []
+          },
+          "school": {
+            "label": "Schools",
+            "count": 0,
+            "places": []
+          },
+          "lodging": {
+            "label": "Hotels",
+            "count": 0,
+            "places": []
+          },
+          "shopping_mall": {
+            "label": "Shopping",
+            "count": 0,
+            "places": []
+          },
+          "transit_station": {
+            "label": "Transit",
+            "count": 0,
+            "places": []
+          }
+        }
+      }
     },
     {
       "id": "BAL-506",
@@ -208,7 +768,7 @@
       "address": "Address TBD",
       "lat": 39.26790791,
       "lng": -76.61570125,
-      "size": "14\u2019H x 48\u2019W",
+      "size": "14’H x 48’W",
       "facing": "South",
       "illuminated": false,
       "digital": false,
@@ -237,7 +797,7 @@
       "image": "/images/units/BAL-507.jpeg",
       "streetViewHeading": 270,
       "geopathId": "50620791",
-      "notes": "Positioned at the intersection of Lombard and Charles Streets, this unit is located under a half mile from Orioles Park. These two main one-way thoroughfares cut through downtown Baltimore\u2019s business district and lead you to I-95 and I-83 expressways.",
+      "notes": "Positioned at the intersection of Lombard and Charles Streets, this unit is located under a half mile from Orioles Park. These two main one-way thoroughfares cut through downtown Baltimore’s business district and lead you to I-95 and I-83 expressways.",
       "sellsheet": "/sellsheets/BAL - Digital Wall 507.pdf"
     },
     {
@@ -268,7 +828,7 @@
       "address": "Address TBD",
       "lat": 39.284024,
       "lng": -76.541193,
-      "size": "14\u2019H x 48\u2019W",
+      "size": "14’H x 48’W",
       "facing": "South",
       "illuminated": false,
       "digital": false,
@@ -297,7 +857,7 @@
       "image": "/images/units/BAL-510.jpeg",
       "streetViewHeading": 0,
       "geopathId": "30748",
-      "notes": "I-95 250\u2019 N/O O\u2019Donnell Street F/S: Beautiful Left Hand Read, with over 1/2 mile of visibility on I-95 as you crest the hill and are heading North to Baltimore County, Harford County and States north such as Delaware, New Jersey & New York. Motorists will turn head on into this face as they get clos",
+      "notes": "I-95 250’ N/O O’Donnell Street F/S: Beautiful Left Hand Read, with over 1/2 mile of visibility on I-95 as you crest the hill and are heading North to Baltimore County, Harford County and States north such as Delaware, New Jersey & New York. Motorists will turn head on into this face as they get clos",
       "sellsheet": "/sellsheets/BAL - Bulletin 510.pdf"
     },
     {
@@ -308,7 +868,7 @@
       "address": "Address TBD",
       "lat": 39.284913,
       "lng": -76.546956,
-      "size": "14\u2019H x 48\u2019W",
+      "size": "14’H x 48’W",
       "facing": "North",
       "illuminated": false,
       "digital": false,
@@ -317,7 +877,7 @@
       "image": "/images/units/BAL-511.jpeg",
       "streetViewHeading": 180,
       "geopathId": "30749",
-      "notes": "I-95  250\u2019 S/O O\u2019Donnell Street F/N:\nGorgeous Right Hand read, as good as a\nbillboard can be with a straight head on shot\nfrom over 1/2 mile away. Framed out perfectly \nabove the building this sign cannot get any better.",
+      "notes": "I-95  250’ S/O O’Donnell Street F/N:\nGorgeous Right Hand read, as good as a\nbillboard can be with a straight head on shot\nfrom over 1/2 mile away. Framed out perfectly \nabove the building this sign cannot get any better.",
       "sellsheet": "/sellsheets/BAL - Bulletin 511.pdf"
     },
     {
@@ -337,7 +897,7 @@
       "image": "/images/units/BAL-512.jpeg",
       "streetViewHeading": 180,
       "geopathId": "30773",
-      "notes": "This spectacular 20\u2019h x 40\u2019w wall is a head on Read as motorist are departing downtown Baltimore headed towards the affluent areas of Baltimore and Harford Counties. Local businesspeople, visitors to downtown Baltimore, and fans of the Ravens and Orioles all use this heavily trafficked route, which",
+      "notes": "This spectacular 20’h x 40’w wall is a head on Read as motorist are departing downtown Baltimore headed towards the affluent areas of Baltimore and Harford Counties. Local businesspeople, visitors to downtown Baltimore, and fans of the Ravens and Orioles all use this heavily trafficked route, which",
       "sellsheet": "/sellsheets/BAL - Wall 512.pdf"
     },
     {
@@ -357,7 +917,7 @@
       "image": "/images/units/BAL-513.jpeg",
       "streetViewHeading": 180,
       "geopathId": "30675648",
-      "notes": "I-83/Jones Falls Expressway- \u00bd Mile South of Cold Spring Lane F/N - This major expressway is the main artery coming from the affluent areas of Baltimore County where businesspeople, tourists and weekend visitors travel to access Baltimore City offices, restaurants, Orioles and Raven stadiums. This a",
+      "notes": "I-83/Jones Falls Expressway- ½ Mile South of Cold Spring Lane F/N - This major expressway is the main artery coming from the affluent areas of Baltimore County where businesspeople, tourists and weekend visitors travel to access Baltimore City offices, restaurants, Orioles and Raven stadiums. This a",
       "sellsheet": "/sellsheets/BAL - Bulletin 513.pdf"
     },
     {
@@ -368,7 +928,7 @@
       "address": "Address TBD",
       "lat": 39.33777,
       "lng": -76.647483,
-      "size": "14\u2019H x 48\u2019W",
+      "size": "14’H x 48’W",
       "facing": "South",
       "illuminated": false,
       "digital": false,
@@ -377,7 +937,7 @@
       "image": "/images/units/BAL-514.jpeg",
       "streetViewHeading": 0,
       "geopathId": "30673744",
-      "notes": "I-83/Jones Falls Expressway- \u00bc Mile North of 41st \nStreet F/S - This major expressway heading North\ntakes commuters and visitors out of Baltimore City\nto the suburbs of Baltimore County, as well, to \nPennsylvania. After a day of working, eating, theatre or \nballgames this is the route home.",
+      "notes": "I-83/Jones Falls Expressway- ¼ Mile North of 41st \nStreet F/S - This major expressway heading North\ntakes commuters and visitors out of Baltimore City\nto the suburbs of Baltimore County, as well, to \nPennsylvania. After a day of working, eating, theatre or \nballgames this is the route home.",
       "sellsheet": "/sellsheets/BAL - Bulletin 514.pdf"
     },
     {
@@ -397,7 +957,7 @@
       "image": "/images/units/BAL-515.jpeg",
       "streetViewHeading": 0,
       "geopathId": "TBD",
-      "notes": "This iconic, unique to the market curved unit is located on Pratt St, the main artery in downtown Baltimore that carries traffic to the Inner Harbor off of 95 and Orioles Park at Camden Yards at I-83. It also directly faces the Baltimore Convention Center and it\u2019s flagship hotel.",
+      "notes": "This iconic, unique to the market curved unit is located on Pratt St, the main artery in downtown Baltimore that carries traffic to the Inner Harbor off of 95 and Orioles Park at Camden Yards at I-83. It also directly faces the Baltimore Convention Center and it’s flagship hotel.",
       "sellsheet": "/sellsheets/BAL - Digital Wall 515.pdf"
     },
     {
@@ -437,7 +997,7 @@
       "image": "/images/units/DE-100.jpeg",
       "streetViewHeading": 270,
       "geopathId": "30917069",
-      "notes": "Size: 12\u2019H x 24\u2019W Weekly IMPs: 530,768 Facing: Multiple Latitude: 39.11741 Longitude: -75.",
+      "notes": "Size: 12’H x 24’W Weekly IMPs: 530,768 Facing: Multiple Latitude: 39.11741 Longitude: -75.",
       "sellsheet": "/sellsheets/DE - Digital 100.pdf"
     },
     {
@@ -477,7 +1037,7 @@
       "image": "/images/units/DET-114.jpeg",
       "streetViewHeading": 270,
       "geopathId": "30819348",
-      "notes": "Just 3 blocks from Comerica Park, close to on/off ramps to Hwy 10 and I-75. Major meeting point for sporting events, impressive sports venues, near casinos, the Detroit Theater District, where some of the nation\u2019s most prestigious music venues are located, and daily vehicular traffic an",
+      "notes": "Just 3 blocks from Comerica Park, close to on/off ramps to Hwy 10 and I-75. Major meeting point for sporting events, impressive sports venues, near casinos, the Detroit Theater District, where some of the nation’s most prestigious music venues are located, and daily vehicular traffic an",
       "sellsheet": "/sellsheets/Detroit - Wall 114.pdf"
     },
     {
@@ -557,7 +1117,7 @@
       "image": "/images/units/LA-1101.jpeg",
       "streetViewHeading": 270,
       "geopathId": "31028579 / 31028580 / \n31028581 / 31028582",
-      "notes": "BULLETINS Size: 16\u2019H x 48\u2019W Weekly IMPs: 881,585 Facing: Multiple Latitude: 34.09054 Longitude: -118.",
+      "notes": "BULLETINS Size: 16’H x 48’W Weekly IMPs: 881,585 Facing: Multiple Latitude: 34.09054 Longitude: -118.",
       "sellsheet": "/sellsheets/LA - Bulletins 1101 West Hollywood Domination.pdf"
     },
     {
@@ -608,7 +1168,7 @@
       "address": "Address TBD",
       "lat": 34.09836,
       "lng": -118.34491,
-      "size": "19\u2019H x 48\u2019W",
+      "size": "19’H x 48’W",
       "facing": "East",
       "illuminated": true,
       "digital": false,
@@ -717,7 +1277,7 @@
       "image": "/images/units/NYC-203.jpeg",
       "streetViewHeading": 270,
       "geopathId": "30819345",
-      "notes": "NYC-203 Nestled between DUMBO and Williamsburg, this neighborhood perfectly reflects the rhythm and pace of the area\u2019s constant state of growth. The Brooklyn Navy Yard is home to hundreds of businesses and employs thousands people from artisans to manufacturers.",
+      "notes": "NYC-203 Nestled between DUMBO and Williamsburg, this neighborhood perfectly reflects the rhythm and pace of the area’s constant state of growth. The Brooklyn Navy Yard is home to hundreds of businesses and employs thousands people from artisans to manufacturers.",
       "sellsheet": "/sellsheets/NYC - Wall 203.pdf"
     },
     {
@@ -737,7 +1297,7 @@
       "image": "/images/units/NYC-204.jpeg",
       "streetViewHeading": 270,
       "geopathId": "30819346",
-      "notes": "NYC-204 This is a head on, unobstructed wall that can be seen by motorists traveling on Northern Blvd heading into Manhattan for nearly a quarter mile! Northern Blvd is home to over 25 auto dealers! Long Island is home to artists\u2019 havens, comedy clubs, public sports fields, dining outposts, dance pa",
+      "notes": "NYC-204 This is a head on, unobstructed wall that can be seen by motorists traveling on Northern Blvd heading into Manhattan for nearly a quarter mile! Northern Blvd is home to over 25 auto dealers! Long Island is home to artists’ havens, comedy clubs, public sports fields, dining outposts, dance pa",
       "sellsheet": "/sellsheets/NYC - Wall 204.pdf"
     },
     {
@@ -1068,7 +1628,7 @@
       "address": "Address TBD",
       "lat": 40.12755793,
       "lng": -74.8829855,
-      "size": "14\u2019H x 48\u2019W",
+      "size": "14’H x 48’W",
       "facing": "West",
       "illuminated": false,
       "digital": false,
@@ -1477,7 +2037,7 @@
       "image": "/images/units/SF-311.jpeg",
       "streetViewHeading": 180,
       "geopathId": "30640501",
-      "notes": "Highway 280 @ 25th Street Off-ramp \u2013 Great read visible for 6 blocks from the top of Potrero Hill approaching the Hwy 280 ramps, located in an upscale yuppie neighborhood one block from Cesar Chavez Street.",
+      "notes": "Highway 280 @ 25th Street Off-ramp – Great read visible for 6 blocks from the top of Potrero Hill approaching the Hwy 280 ramps, located in an upscale yuppie neighborhood one block from Cesar Chavez Street.",
       "sellsheet": "/sellsheets/San Francisco - Wall 311.pdf"
     },
     {
@@ -1657,7 +2217,7 @@
       "image": "/images/units/SF-320.jpeg",
       "streetViewHeading": 90,
       "geopathId": "30640500",
-      "notes": "This outstanding wallscape is strategically placed in the upscale shopping area bordering Pacific Heights, Cow Hollow and the Marina. Union Street\u2019s exclusive boutiques, shops, cafes and galleries are well known in the Bay Area.",
+      "notes": "This outstanding wallscape is strategically placed in the upscale shopping area bordering Pacific Heights, Cow Hollow and the Marina. Union Street’s exclusive boutiques, shops, cafes and galleries are well known in the Bay Area.",
       "sellsheet": "/sellsheets/San Francisco - Wall 320.pdf"
     },
     {
@@ -1757,7 +2317,7 @@
       "image": "/images/units/SF-325.jpeg",
       "streetViewHeading": 90,
       "geopathId": "30719818",
-      "notes": "This stand out unit is in the heart of shopping and Union Square! Next to Macy\u2019s, H&M, Louis Vuitton, Skechers, steps from the Hilton, Neiman Marcus, The Westin, Clift and Palace Hotels!",
+      "notes": "This stand out unit is in the heart of shopping and Union Square! Next to Macy’s, H&M, Louis Vuitton, Skechers, steps from the Hilton, Neiman Marcus, The Westin, Clift and Palace Hotels!",
       "sellsheet": "/sellsheets/San Francisco - Wall 325.pdf"
     },
     {
@@ -1837,7 +2397,7 @@
       "image": "/images/units/SF-329.jpeg",
       "streetViewHeading": 90,
       "geopathId": "30768999",
-      "notes": "Located on busy Lombard Street, at the edge of Russian Hill! Major tourist attraction \u2013 Lombard Street is an east\u2013west street that is famous for a steep, one-block section with 8 hairpin turns & landscaped flowerbeds. On a 27-degree angle, this famously crooked street is known as the \"crookedest str",
+      "notes": "Located on busy Lombard Street, at the edge of Russian Hill! Major tourist attraction – Lombard Street is an east–west street that is famous for a steep, one-block section with 8 hairpin turns & landscaped flowerbeds. On a 27-degree angle, this famously crooked street is known as the \"crookedest str",
       "sellsheet": "/sellsheets/San Francisco - Wall 329.pdf"
     },
     {
@@ -1857,7 +2417,7 @@
       "image": "/images/units/SF-330.jpeg",
       "streetViewHeading": 90,
       "geopathId": "30989627",
-      "notes": "Located on the Crookedest street in the world located between the Presidio and Van Ness just a few blocks from Fort Mason. Attracting millions of tourists each year \u2013 Lombard Street is an east\u2013 west street that is famous for a steep, one-block section with 8 hairpin turns & landscaped flowerbeds.",
+      "notes": "Located on the Crookedest street in the world located between the Presidio and Van Ness just a few blocks from Fort Mason. Attracting millions of tourists each year – Lombard Street is an east– west street that is famous for a steep, one-block section with 8 hairpin turns & landscaped flowerbeds.",
       "sellsheet": "/sellsheets/San Francisco - Wall 330.pdf"
     },
     {
@@ -1868,7 +2428,7 @@
       "address": "Address TBD",
       "lat": 37.7977,
       "lng": -122.432,
-      "size": "14\u2019H x 12\u2019W",
+      "size": "14’H x 12’W",
       "facing": "East",
       "illuminated": false,
       "digital": false,
@@ -2017,7 +2577,7 @@
       "image": "/images/units/DC-012.jpeg",
       "streetViewHeading": 180,
       "geopathId": "30640467",
-      "notes": "In the heart of DC\u2019s hustle and bustle of this neighborhood features live entertainment, rich culture, fine food and luxury shopping, plenty of foot traffic, great shopping, and energy-filled restaurants in this neighborhood. That attracts residents and tourists alike.",
+      "notes": "In the heart of DC’s hustle and bustle of this neighborhood features live entertainment, rich culture, fine food and luxury shopping, plenty of foot traffic, great shopping, and energy-filled restaurants in this neighborhood. That attracts residents and tourists alike.",
       "sellsheet": "/sellsheets/DC - Wall 012.pdf"
     },
     {
@@ -2117,7 +2677,7 @@
       "image": "/images/units/DC-017.jpeg",
       "streetViewHeading": 0,
       "geopathId": "30640475",
-      "notes": "In the heart of DC\u2019s hustle and bustle of this neighborhood features live entertainment, rich culture, fine food and luxury shopping, plenty of foot traffic, great shopping, and energy-filled restaurants in this neighborhood. That attracts residents and tourists alike.",
+      "notes": "In the heart of DC’s hustle and bustle of this neighborhood features live entertainment, rich culture, fine food and luxury shopping, plenty of foot traffic, great shopping, and energy-filled restaurants in this neighborhood. That attracts residents and tourists alike.",
       "sellsheet": "/sellsheets/DC - Wall 017.pdf"
     },
     {
@@ -2137,7 +2697,7 @@
       "image": "/images/units/DC-018.jpeg",
       "streetViewHeading": 0,
       "geopathId": "30640466",
-      "notes": "The only inbound bulletin on South Capitol, located on the South Capitol Street Bridge at the entrance of the new Nationals Stadium. This bulletin sits beneath the south side of The Capitol Dome and stands just outside the entrance to the new Washington Navy Yard and just \u00bd mile from the Headquarter",
+      "notes": "The only inbound bulletin on South Capitol, located on the South Capitol Street Bridge at the entrance of the new Nationals Stadium. This bulletin sits beneath the south side of The Capitol Dome and stands just outside the entrance to the new Washington Navy Yard and just ½ mile from the Headquarter",
       "sellsheet": "/sellsheets/DC - Bulletin 018.pdf"
     },
     {
@@ -2217,7 +2777,7 @@
       "image": "/images/units/DC-030.jpeg",
       "streetViewHeading": 270,
       "geopathId": "30577211",
-      "notes": "Located at the busy south entrance to Tysons Corner Center \u2013 next to a traffic light. Only 10 miles from the heart of Washington DC.",
+      "notes": "Located at the busy south entrance to Tysons Corner Center – next to a traffic light. Only 10 miles from the heart of Washington DC.",
       "sellsheet": "/sellsheets/DC - Bulletin 030.pdf"
     },
     {
@@ -2257,7 +2817,7 @@
       "image": "/images/units/DC-032.jpeg",
       "streetViewHeading": 270,
       "geopathId": "30577213",
-      "notes": "Located at the busy south entrance to Tysons Corner Center \u2013 next to a traffic light. Only 10 miles from the heart of Washington DC.",
+      "notes": "Located at the busy south entrance to Tysons Corner Center – next to a traffic light. Only 10 miles from the heart of Washington DC.",
       "sellsheet": "/sellsheets/DC - Bulletin 032.pdf"
     },
     {
@@ -2277,7 +2837,7 @@
       "image": "/images/units/DC-033.jpeg",
       "streetViewHeading": 90,
       "geopathId": "30577214",
-      "notes": "Located at the busy south entrance to Tysons Corner Center \u2013 next to a traffic light. Only 10 miles from the heart of Washington DC.",
+      "notes": "Located at the busy south entrance to Tysons Corner Center – next to a traffic light. Only 10 miles from the heart of Washington DC.",
       "sellsheet": "/sellsheets/DC - Bulletin 033.pdf"
     },
     {
@@ -2297,7 +2857,7 @@
       "image": "/images/units/DC-035D.jpeg",
       "streetViewHeading": 270,
       "geopathId": "30647487",
-      "notes": "Digital sign on Route 50 at the Chesapeake Bay Bridge \u2013 the gateway to the Eastern Shore from those from Baltimore, Washington, Hagerstown and Harrisburg as they head to Ocean City, Assateague, Chincoteague, Rehoboth, Bethany\u2026 and all the most popular beach destinations! This sign often sees bumper-",
+      "notes": "Digital sign on Route 50 at the Chesapeake Bay Bridge – the gateway to the Eastern Shore from those from Baltimore, Washington, Hagerstown and Harrisburg as they head to Ocean City, Assateague, Chincoteague, Rehoboth, Bethany… and all the most popular beach destinations! This sign often sees bumper-",
       "sellsheet": null
     },
     {
@@ -2317,7 +2877,7 @@
       "image": "/images/units/DC-040.jpeg",
       "streetViewHeading": 270,
       "geopathId": "31031475",
-      "notes": "With a prime location in the heart of downtown\u2019s conve- ntion & entertainment district, visitors will find plenty to do with access to the hottest restaurants & bars, shopping, hotels & live sports. The Walter E.",
+      "notes": "With a prime location in the heart of downtown’s conve- ntion & entertainment district, visitors will find plenty to do with access to the hottest restaurants & bars, shopping, hotels & live sports. The Walter E.",
       "sellsheet": "/sellsheets/DC - Digital Wall 040.pdf"
     },
     {
@@ -2337,7 +2897,7 @@
       "image": "/images/units/DC-050.jpeg",
       "streetViewHeading": 270,
       "geopathId": "30755586",
-      "notes": "Massive premium ad space on NY Ave! It\u2019s a monument amongst monuments and the biggest advertising presence to ever hit the DC Cityscape. Just a mile from Howard University, Union Square and the US Capitol! Connects to Union Market neighborhood.",
+      "notes": "Massive premium ad space on NY Ave! It’s a monument amongst monuments and the biggest advertising presence to ever hit the DC Cityscape. Just a mile from Howard University, Union Square and the US Capitol! Connects to Union Market neighborhood.",
       "sellsheet": "/sellsheets/DC - Wall 050.pdf"
     },
     {
@@ -2377,7 +2937,7 @@
       "image": "/images/units/DC-052.jpeg",
       "streetViewHeading": 90,
       "geopathId": "30996495",
-      "notes": "Located in the Capitol Riverfront\u2019s Ballpark district, across from Nationals Stadium, surrounded by nightlife, retail, restaurants and the Navy Yard!",
+      "notes": "Located in the Capitol Riverfront’s Ballpark district, across from Nationals Stadium, surrounded by nightlife, retail, restaurants and the Navy Yard!",
       "sellsheet": "/sellsheets/DC - Wall 052.pdf"
     },
     {
@@ -2408,7 +2968,7 @@
       "address": "Tysons Corner, VA",
       "lat": 38.91891,
       "lng": -77.218751,
-      "size": "34\u20198\u201dH x 42\u201911\u201dW",
+      "size": "34’8”H x 42’11”W",
       "facing": "North",
       "illuminated": true,
       "digital": true,
