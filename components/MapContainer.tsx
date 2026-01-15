@@ -165,8 +165,9 @@ export default function MapContainer({
     mapRef.current = null
   }, [])
 
-  const handleMarkerClick = (unitId: string) => {
-    setActiveMarker(unitId)
+  const handleMarkerClick = (unit: Unit) => {
+    setActiveMarker(unit.id)
+    onFocusedUnitChange?.(unit)
   }
 
   const handleInfoWindowClose = () => {
@@ -271,7 +272,7 @@ export default function MapContainer({
           <MarkerF
             key={unit.id}
             position={{ lat: unit.lat, lng: unit.lng }}
-            onClick={() => handleMarkerClick(unit.id)}
+            onClick={() => handleMarkerClick(unit)}
             icon={createMarkerIcon(unit)}
             title={unit.name}
           />
