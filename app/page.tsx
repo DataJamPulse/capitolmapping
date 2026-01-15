@@ -16,6 +16,7 @@ export default function Home() {
   const [searchLocation, setSearchLocation] = useState<{ lat: number; lng: number } | null>(null)
   const [isShareModalOpen, setIsShareModalOpen] = useState(false)
   const [focusedUnit, setFocusedUnit] = useState<Unit | null>(null)
+  const [isGoogleLoaded, setIsGoogleLoaded] = useState(false)
 
   const handleToggleSelect = useCallback((unitId: string) => {
     setSelectedIds(prev => {
@@ -73,6 +74,7 @@ export default function Home() {
           onLocationSearch={handleLocationSearch}
           searchLocation={searchLocation}
           onClearLocationSearch={handleClearLocationSearch}
+          isGoogleLoaded={isGoogleLoaded}
         />
 
         {/* Map */}
@@ -84,6 +86,7 @@ export default function Home() {
             focusedUnit={focusedUnit}
             onFocusedUnitChange={setFocusedUnit}
             searchLocation={searchLocation}
+            onGoogleLoaded={setIsGoogleLoaded}
           />
         </div>
       </div>

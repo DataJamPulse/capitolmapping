@@ -1,9 +1,12 @@
 'use client'
 
 import { useCallback, useState, useRef, useEffect } from 'react'
-import { GoogleMap, useJsApiLoader, MarkerF, InfoWindowF } from '@react-google-maps/api'
+import { GoogleMap, useJsApiLoader, MarkerF, InfoWindowF, CircleF, TrafficLayer } from '@react-google-maps/api'
 import { Unit } from '@/lib/types'
 import UnitInfoWindow from './UnitInfoWindow'
+
+// Libraries to load with Google Maps
+const libraries: ('places')[] = ['places']
 
 interface MapContainerProps {
   units: Unit[]
@@ -14,6 +17,7 @@ interface MapContainerProps {
   focusedUnit?: Unit | null
   onFocusedUnitChange?: (unit: Unit | null) => void
   searchLocation?: { lat: number; lng: number } | null
+  onGoogleLoaded?: (isLoaded: boolean) => void
 }
 
 const mapContainerStyle = {
@@ -117,14 +121,24 @@ export default function MapContainer({
   focusedUnit,
   onFocusedUnitChange,
   searchLocation,
+  onGoogleLoaded,
 }: MapContainerProps) {
   const [activeMarker, setActiveMarker] = useState<string | null>(null)
+  const [showTraffic, setShowTraffic] = useState(false)
   const mapRef = useRef<google.maps.Map | null>(null)
 
-  // Load Google Maps
+  // Load Google Maps with Places library
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
+    libraries,
   })
+
+  // Notify parent when Google Maps is loaded
+  useEffect(() => {
+    if (onGoogleLoaded) {
+      onGoogleLoaded(isLoaded)
+    }
+  }, [isLoaded, onGoogleLoaded])
 
   // Handle focused unit from sidebar
   useEffect(() => {
@@ -202,65 +216,101 @@ export default function MapContainer({
   const activeUnit = units.find(u => u.id === activeMarker)
 
   return (
-    <GoogleMap
-      mapContainerStyle={mapContainerStyle}
-      center={center}
-      zoom={zoom}
-      onLoad={onLoad}
-      onUnmount={onUnmount}
-      options={{
-        styles: mapStyles,
-        disableDefaultUI: false,
-        zoomControl: true,
-        mapTypeControl: false,
-        streetViewControl: false,
-        fullscreenControl: true,
-      }}
-    >
-      {/* Search location marker */}
-      {searchLocation && (
-        <MarkerF
-          position={searchLocation}
-          icon={{
-            path: google.maps.SymbolPath.CIRCLE,
-            fillColor: '#3B82F6',
-            fillOpacity: 1,
-            strokeColor: '#ffffff',
-            strokeWeight: 3,
-            scale: 12,
-          }}
-          title="Search Location"
-          zIndex={1000}
-        />
-      )}
+    <div className="relative w-full h-full">
+      <GoogleMap
+        mapContainerStyle={mapContainerStyle}
+        center={center}
+        zoom={zoom}
+        onLoad={onLoad}
+        onUnmount={onUnmount}
+        options={{
+          styles: mapStyles,
+          disableDefaultUI: false,
+          zoomControl: true,
+          mapTypeControl: false,
+          streetViewControl: false,
+          fullscreenControl: true,
+        }}
+      >
+        {/* Traffic Layer */}
+        {showTraffic && <TrafficLayer />}
 
-      {units.map(unit => (
-        <MarkerF
-          key={unit.id}
-          position={{ lat: unit.lat, lng: unit.lng }}
-          onClick={() => handleMarkerClick(unit.id)}
-          icon={createMarkerIcon(unit)}
-          title={unit.name}
-        />
-      ))}
-
-      {activeMarker && activeUnit && (
-        <InfoWindowF
-          position={{ lat: activeUnit.lat, lng: activeUnit.lng }}
-          onCloseClick={handleInfoWindowClose}
-          options={{
-            pixelOffset: new google.maps.Size(0, -30),
-            maxWidth: 350,
-          }}
-        >
-          <UnitInfoWindow
-            unit={activeUnit}
-            isSelected={selectedIds.has(activeUnit.id)}
-            onToggleSelect={onToggleSelect}
-            onClose={handleInfoWindowClose}
+        {/* Radius circle around focused unit (500 feet = ~152 meters) */}
+        {focusedUnit && (
+          <CircleF
+            center={{ lat: focusedUnit.lat, lng: focusedUnit.lng }}
+            radius={152}
+            options={{
+              fillColor: '#C41230',
+              fillOpacity: 0.1,
+              strokeColor: '#C41230',
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+            }}
           />
-        </InfoWindowF>
-      )}
-    </GoogleMap>
+        )}
+
+        {/* Search location marker */}
+        {searchLocation && (
+          <MarkerF
+            position={searchLocation}
+            icon={{
+              path: google.maps.SymbolPath.CIRCLE,
+              fillColor: '#3B82F6',
+              fillOpacity: 1,
+              strokeColor: '#ffffff',
+              strokeWeight: 3,
+              scale: 12,
+            }}
+            title="Search Location"
+            zIndex={1000}
+          />
+        )}
+
+        {units.map(unit => (
+          <MarkerF
+            key={unit.id}
+            position={{ lat: unit.lat, lng: unit.lng }}
+            onClick={() => handleMarkerClick(unit.id)}
+            icon={createMarkerIcon(unit)}
+            title={unit.name}
+          />
+        ))}
+
+        {activeMarker && activeUnit && (
+          <InfoWindowF
+            position={{ lat: activeUnit.lat, lng: activeUnit.lng }}
+            onCloseClick={handleInfoWindowClose}
+            options={{
+              pixelOffset: new google.maps.Size(0, -30),
+              maxWidth: 350,
+            }}
+          >
+            <UnitInfoWindow
+              unit={activeUnit}
+              isSelected={selectedIds.has(activeUnit.id)}
+              onToggleSelect={onToggleSelect}
+              onClose={handleInfoWindowClose}
+            />
+          </InfoWindowF>
+        )}
+      </GoogleMap>
+
+      {/* Traffic Layer Toggle Button */}
+      <button
+        onClick={() => setShowTraffic(!showTraffic)}
+        className={`absolute top-4 right-4 px-3 py-2 rounded-lg shadow-lg flex items-center gap-2 text-sm font-medium transition-colors ${
+          showTraffic
+            ? 'bg-capitol-red text-white'
+            : 'bg-white text-gray-700 hover:bg-gray-50'
+        }`}
+        title="Toggle Traffic Layer"
+      >
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+        </svg>
+        Traffic
+      </button>
+    </div>
   )
 }

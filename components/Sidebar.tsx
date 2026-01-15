@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Unit } from '@/lib/types'
 
 interface SidebarProps {
@@ -15,6 +15,7 @@ interface SidebarProps {
   onLocationSearch: (lat: number, lng: number) => void
   searchLocation: { lat: number; lng: number } | null
   onClearLocationSearch: () => void
+  isGoogleLoaded?: boolean
 }
 
 export default function Sidebar({
@@ -29,10 +30,37 @@ export default function Sidebar({
   onLocationSearch,
   searchLocation,
   onClearLocationSearch,
+  isGoogleLoaded = false,
 }: SidebarProps) {
   const [searchAddress, setSearchAddress] = useState('')
   const [isSearching, setIsSearching] = useState(false)
   const [searchError, setSearchError] = useState('')
+  const searchInputRef = useRef<HTMLInputElement>(null)
+  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null)
+
+  // Initialize Google Places Autocomplete
+  useEffect(() => {
+    if (!isGoogleLoaded || !searchInputRef.current || autocompleteRef.current) return
+
+    try {
+      autocompleteRef.current = new google.maps.places.Autocomplete(searchInputRef.current, {
+        types: ['geocode', 'establishment'],
+        fields: ['geometry', 'formatted_address', 'name'],
+      })
+
+      autocompleteRef.current.addListener('place_changed', () => {
+        const place = autocompleteRef.current?.getPlace()
+        if (place?.geometry?.location) {
+          const lat = place.geometry.location.lat()
+          const lng = place.geometry.location.lng()
+          onLocationSearch(lat, lng)
+          setSearchAddress(place.formatted_address || place.name || '')
+        }
+      })
+    } catch (e) {
+      console.error('Autocomplete init failed:', e)
+    }
+  }, [isGoogleLoaded, onLocationSearch])
 
   // Get unique markets and types
   const markets = Array.from(new Set(units.map(u => u.market))).sort()
@@ -132,11 +160,12 @@ export default function Sidebar({
           </label>
           <div className="flex gap-2">
             <input
+              ref={searchInputRef}
               type="text"
               value={searchAddress}
               onChange={(e) => setSearchAddress(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-              placeholder="Enter address..."
+              placeholder="Enter address or place..."
               className="flex-1 px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-capitol-red"
             />
             <button
