@@ -6,8 +6,14 @@
 const fs = require('fs');
 const path = require('path');
 
-// Your Google Maps API key
-const API_KEY = process.env.GOOGLE_MAPS_API_KEY || 'AIzaSyBSHrqWzLarfvcHrEjtAg4HvJnA6H2_99Q';
+// Your Google Maps API key (set via environment variable)
+const API_KEY = process.env.GOOGLE_MAPS_API_KEY;
+
+if (!API_KEY) {
+  console.error('Error: GOOGLE_MAPS_API_KEY environment variable is required');
+  console.error('Run: GOOGLE_MAPS_API_KEY=your_key node scripts/fetchPOIs.js');
+  process.exit(1);
+}
 
 // POI types to search for
 const POI_TYPES = [
