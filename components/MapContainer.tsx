@@ -121,13 +121,32 @@ const markerLabels: Record<string, string> = {
   kiosk: 'Kiosks',
 }
 
-// POI types to search for
+// POI types to search for (expanded list)
 const POI_CATEGORIES = [
-  { type: 'cafe', label: 'Coffee', color: '#8B4513' },
+  { type: 'cafe', label: 'Coffee Shops', color: '#8B4513' },
   { type: 'restaurant', label: 'Restaurants', color: '#FF6B35' },
-  { type: 'bar', label: 'Bars', color: '#7C3AED' },
-  { type: 'gym', label: 'Gyms', color: '#10B981' },
+  { type: 'bar', label: 'Bars & Pubs', color: '#7C3AED' },
+  { type: 'gym', label: 'Gyms & Fitness', color: '#10B981' },
   { type: 'shopping_mall', label: 'Shopping', color: '#EC4899' },
+  { type: 'school', label: 'Schools', color: '#3B82F6' },
+  { type: 'park', label: 'Parks', color: '#22C55E' },
+  { type: 'lodging', label: 'Hotels', color: '#F59E0B' },
+  { type: 'transit_station', label: 'Transit', color: '#6366F1' },
+  { type: 'movie_theater', label: 'Cinemas', color: '#EF4444' },
+  { type: 'bank', label: 'Banks', color: '#14B8A6' },
+  { type: 'hospital', label: 'Hospitals', color: '#DC2626' },
+  { type: 'church', label: 'Places of Worship', color: '#8B5CF6' },
+  { type: 'local_government_office', label: 'Government', color: '#475569' },
+]
+
+// Distance options in meters
+const DISTANCE_OPTIONS = [
+  { label: '300 ft', value: 91 },
+  { label: '500 ft', value: 152 },
+  { label: '1000 ft', value: 305 },
+  { label: '1/4 mile', value: 402 },
+  { label: '1/2 mile', value: 805 },
+  { label: '1 mile', value: 1609 },
 ]
 
 interface NearbyPOI {
@@ -151,9 +170,12 @@ export default function MapContainer({
 }: MapContainerProps) {
   const [activeMarker, setActiveMarker] = useState<string | null>(null)
   const [showTraffic, setShowTraffic] = useState(false)
-  const [showPOIs, setShowPOIs] = useState(true)
+  const [showPOIPanel, setShowPOIPanel] = useState(false)
   const [nearbyPOIs, setNearbyPOIs] = useState<NearbyPOI[]>([])
   const [loadingPOIs, setLoadingPOIs] = useState(false)
+  const [selectedPOITypes, setSelectedPOITypes] = useState<string[]>([])
+  const [selectedDistance, setSelectedDistance] = useState(402) // Default 1/4 mile
+  const [searchRadius, setSearchRadius] = useState<number | null>(null) // For circle display
   const mapRef = useRef<google.maps.Map | null>(null)
 
   // Load Google Maps with Places library
@@ -178,60 +200,83 @@ export default function MapContainer({
     }
   }, [focusedUnit])
 
-  // Fetch nearby POIs when unit is focused
+  // Clear POIs when focused unit changes
   useEffect(() => {
-    if (!focusedUnit || !isLoaded || !mapRef.current) {
-      setNearbyPOIs([])
+    setNearbyPOIs([])
+    setSearchRadius(null)
+  }, [focusedUnit])
+
+  // Fetch POIs on demand (triggered by Search button)
+  const handleSearchPOIs = async () => {
+    if (!focusedUnit || !isLoaded || !mapRef.current || selectedPOITypes.length === 0) {
       return
     }
 
-    const fetchPOIs = async () => {
-      setLoadingPOIs(true)
-      const allPOIs: NearbyPOI[] = []
-      const service = new google.maps.places.PlacesService(mapRef.current!)
-      const location = new google.maps.LatLng(focusedUnit.lat, focusedUnit.lng)
+    setLoadingPOIs(true)
+    setSearchRadius(selectedDistance)
+    const allPOIs: NearbyPOI[] = []
+    const service = new google.maps.places.PlacesService(mapRef.current)
+    const location = new google.maps.LatLng(focusedUnit.lat, focusedUnit.lng)
 
-      for (const category of POI_CATEGORIES) {
-        try {
-          const results = await new Promise<google.maps.places.PlaceResult[]>((resolve) => {
-            service.nearbySearch(
-              {
-                location,
-                radius: 152, // 500 feet in meters
-                type: category.type,
-              },
-              (results, status) => {
-                if (status === google.maps.places.PlacesServiceStatus.OK && results) {
-                  resolve(results)
-                } else {
-                  resolve([])
-                }
+    // Only search selected POI types
+    const categoriesToSearch = POI_CATEGORIES.filter(c => selectedPOITypes.includes(c.type))
+
+    for (const category of categoriesToSearch) {
+      try {
+        const results = await new Promise<google.maps.places.PlaceResult[]>((resolve) => {
+          service.nearbySearch(
+            {
+              location,
+              radius: selectedDistance,
+              type: category.type,
+            },
+            (results, status) => {
+              if (status === google.maps.places.PlacesServiceStatus.OK && results) {
+                resolve(results)
+              } else {
+                resolve([])
               }
-            )
-          })
-
-          results.slice(0, 3).forEach((place) => {
-            if (place.geometry?.location) {
-              allPOIs.push({
-                name: place.name || 'Unknown',
-                type: category.type,
-                lat: place.geometry.location.lat(),
-                lng: place.geometry.location.lng(),
-                color: category.color,
-              })
             }
-          })
-        } catch (e) {
-          console.error(`Error fetching ${category.type}:`, e)
-        }
-      }
+          )
+        })
 
-      setNearbyPOIs(allPOIs)
-      setLoadingPOIs(false)
+        results.forEach((place) => {
+          if (place.geometry?.location) {
+            allPOIs.push({
+              name: place.name || 'Unknown',
+              type: category.type,
+              lat: place.geometry.location.lat(),
+              lng: place.geometry.location.lng(),
+              color: category.color,
+            })
+          }
+        })
+      } catch (e) {
+        console.error(`Error fetching ${category.type}:`, e)
+      }
     }
 
-    fetchPOIs()
-  }, [focusedUnit, isLoaded])
+    setNearbyPOIs(allPOIs)
+    setLoadingPOIs(false)
+  }
+
+  // Toggle POI type selection
+  const togglePOIType = (type: string) => {
+    setSelectedPOITypes(prev =>
+      prev.includes(type)
+        ? prev.filter(t => t !== type)
+        : [...prev, type]
+    )
+  }
+
+  // Select/deselect all POI types
+  const toggleAllPOITypes = () => {
+    if (selectedPOITypes.length === POI_CATEGORIES.length) {
+      setSelectedPOITypes([])
+    } else {
+      setSelectedPOITypes(POI_CATEGORIES.map(c => c.type))
+    }
+  }
 
   // Handle search location - pan to it when set
   useEffect(() => {
@@ -320,11 +365,11 @@ export default function MapContainer({
         {/* Traffic Layer */}
         {showTraffic && <TrafficLayer />}
 
-        {/* Radius circle around focused unit (500 feet = ~152 meters) */}
-        {focusedUnit && (
+        {/* Radius circle around focused unit - shows after POI search */}
+        {focusedUnit && searchRadius && (
           <CircleF
             center={{ lat: focusedUnit.lat, lng: focusedUnit.lng }}
-            radius={152}
+            radius={searchRadius}
             options={{
               fillColor: '#C41230',
               fillOpacity: 0.1,
@@ -363,7 +408,7 @@ export default function MapContainer({
         ))}
 
         {/* Nearby POI markers */}
-        {showPOIs && nearbyPOIs.map((poi, index) => (
+        {nearbyPOIs.map((poi, index) => (
           <MarkerF
             key={`poi-${index}-${poi.name}`}
             position={{ lat: poi.lat, lng: poi.lng }}
@@ -417,13 +462,13 @@ export default function MapContainer({
         </button>
 
         <button
-          onClick={() => setShowPOIs(!showPOIs)}
+          onClick={() => setShowPOIPanel(!showPOIPanel)}
           className={`px-3 py-2 rounded-lg shadow-lg flex items-center gap-2 text-sm font-medium transition-colors ${
-            showPOIs
+            showPOIPanel
               ? 'bg-capitol-red text-white'
               : 'bg-white text-gray-700 hover:bg-gray-50'
           }`}
-          title="Toggle Nearby Places"
+          title="POI Search"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -433,7 +478,7 @@ export default function MapContainer({
         </button>
       </div>
 
-      {/* Legend */}
+      {/* Unit Types Legend */}
       <div className="absolute bottom-4 left-4 bg-white rounded-lg shadow-lg p-3">
         <h4 className="text-xs font-semibold text-gray-500 mb-2">UNIT TYPES</h4>
         <div className="space-y-1.5">
@@ -453,38 +498,121 @@ export default function MapContainer({
         </div>
       </div>
 
-      {/* POI Legend */}
-      {focusedUnit && showPOIs && (
-        <div className="absolute bottom-4 right-4 bg-white rounded-lg shadow-lg p-3 max-w-xs">
-          <div className="flex items-center justify-between mb-2">
-            <h4 className="text-xs font-semibold text-gray-500">NEARBY (500ft)</h4>
-            {loadingPOIs && (
-              <div className="w-3 h-3 border-2 border-capitol-red border-t-transparent rounded-full animate-spin" />
-            )}
+      {/* POI Search Panel */}
+      {showPOIPanel && (
+        <div className="absolute top-16 right-4 bg-white rounded-lg shadow-lg p-4 w-72">
+          <div className="flex items-center justify-between mb-3">
+            <h4 className="text-sm font-semibold text-gray-700">Find Nearby Places</h4>
+            <button
+              onClick={() => setShowPOIPanel(false)}
+              className="text-gray-400 hover:text-gray-600"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
-          {nearbyPOIs.length > 0 ? (
-            <div className="space-y-1">
-              {POI_CATEGORIES.map(cat => {
-                const count = nearbyPOIs.filter(p => p.type === cat.type).length
-                if (count === 0) return null
-                return (
-                  <div key={cat.type} className="flex items-center gap-2 text-xs">
-                    <span
-                      className="w-3 h-3 rounded-full flex-shrink-0"
-                      style={{ backgroundColor: cat.color }}
-                    />
-                    <span className="text-gray-600">{cat.label}</span>
-                    <span className="text-gray-400 ml-auto">{count}</span>
-                  </div>
-                )
-              })}
-              <div className="pt-1 mt-1 border-t border-gray-100 text-xs text-gray-500">
-                Total: {nearbyPOIs.length} places
+
+          {!focusedUnit ? (
+            <p className="text-xs text-gray-500 text-center py-4">
+              Click on a unit to search for nearby places
+            </p>
+          ) : (
+            <>
+              {/* Distance Dropdown */}
+              <div className="mb-3">
+                <label className="block text-xs font-medium text-gray-500 mb-1">Distance</label>
+                <select
+                  value={selectedDistance}
+                  onChange={(e) => setSelectedDistance(Number(e.target.value))}
+                  className="w-full px-2 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-capitol-red"
+                >
+                  {DISTANCE_OPTIONS.map(opt => (
+                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                  ))}
+                </select>
               </div>
-            </div>
-          ) : !loadingPOIs ? (
-            <p className="text-xs text-gray-400">No places found nearby</p>
-          ) : null}
+
+              {/* POI Types */}
+              <div className="mb-3">
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-xs font-medium text-gray-500">Place Types</label>
+                  <button
+                    onClick={toggleAllPOITypes}
+                    className="text-xs text-capitol-red hover:text-capitol-red-dark"
+                  >
+                    {selectedPOITypes.length === POI_CATEGORIES.length ? 'Clear All' : 'Select All'}
+                  </button>
+                </div>
+                <div className="max-h-48 overflow-y-auto border border-gray-200 rounded-lg p-2 space-y-1">
+                  {POI_CATEGORIES.map(cat => (
+                    <label
+                      key={cat.type}
+                      className="flex items-center gap-2 text-xs cursor-pointer hover:bg-gray-50 p-1 rounded"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={selectedPOITypes.includes(cat.type)}
+                        onChange={() => togglePOIType(cat.type)}
+                        className="w-3 h-3 text-capitol-red rounded border-gray-300 focus:ring-capitol-red"
+                      />
+                      <span
+                        className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+                        style={{ backgroundColor: cat.color }}
+                      />
+                      <span className="text-gray-600">{cat.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Search Button */}
+              <button
+                onClick={handleSearchPOIs}
+                disabled={selectedPOITypes.length === 0 || loadingPOIs}
+                className="w-full px-3 py-2 bg-capitol-red text-white rounded-lg text-sm font-medium hover:bg-capitol-red-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {loadingPOIs ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    Searching...
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    Search ({selectedPOITypes.length} types)
+                  </>
+                )}
+              </button>
+
+              {/* Results */}
+              {nearbyPOIs.length > 0 && (
+                <div className="mt-3 pt-3 border-t border-gray-200">
+                  <h5 className="text-xs font-medium text-gray-500 mb-2">
+                    Results ({nearbyPOIs.length} places)
+                  </h5>
+                  <div className="max-h-32 overflow-y-auto space-y-1">
+                    {POI_CATEGORIES.map(cat => {
+                      const count = nearbyPOIs.filter(p => p.type === cat.type).length
+                      if (count === 0) return null
+                      return (
+                        <div key={cat.type} className="flex items-center gap-2 text-xs">
+                          <span
+                            className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+                            style={{ backgroundColor: cat.color }}
+                          />
+                          <span className="text-gray-600">{cat.label}</span>
+                          <span className="text-gray-400 ml-auto">{count}</span>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
+            </>
+          )}
         </div>
       )}
     </div>
