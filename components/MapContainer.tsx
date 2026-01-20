@@ -2,7 +2,7 @@
 
 import { useCallback, useState, useRef, useEffect, useMemo } from 'react'
 import { GoogleMap, useJsApiLoader, MarkerF, InfoWindowF, CircleF, TrafficLayer } from '@react-google-maps/api'
-import { Unit } from '@/lib/types'
+import { Unit, UnitAvailability } from '@/lib/types'
 import UnitInfoWindow from './UnitInfoWindow'
 
 // Libraries to load with Google Maps
@@ -18,6 +18,7 @@ interface MapContainerProps {
   onFocusedUnitChange?: (unit: Unit | null) => void
   searchLocation?: { lat: number; lng: number } | null
   onGoogleLoaded?: (isLoaded: boolean) => void
+  availability?: Map<string, UnitAvailability>
 }
 
 const mapContainerStyle = {
@@ -170,6 +171,7 @@ export default function MapContainer({
   onFocusedUnitChange,
   searchLocation,
   onGoogleLoaded,
+  availability,
 }: MapContainerProps) {
   const [activeMarker, setActiveMarker] = useState<string | null>(null)
   const [showTraffic, setShowTraffic] = useState(false)
@@ -466,6 +468,7 @@ export default function MapContainer({
               isSelected={selectedIds.has(activeUnit.id)}
               onToggleSelect={onToggleSelect}
               onClose={handleInfoWindowClose}
+              availability={availability?.get(activeUnit.id)}
             />
           </InfoWindowF>
         )}

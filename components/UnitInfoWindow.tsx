@@ -1,17 +1,21 @@
 'use client'
 
-import { Unit } from '@/lib/types'
+import { Unit, UnitAvailability } from '@/lib/types'
 import { generateStreetViewUrl } from '@/lib/streetview'
+import { getCurrentAvailability, getStatusDisplay, formatDateRange } from '@/lib/availability'
 
 interface UnitInfoWindowProps {
   unit: Unit
   isSelected: boolean
   onToggleSelect: (unitId: string) => void
   onClose: () => void
+  availability?: UnitAvailability
 }
 
-export default function UnitInfoWindow({ unit, isSelected, onToggleSelect, onClose }: UnitInfoWindowProps) {
+export default function UnitInfoWindow({ unit, isSelected, onToggleSelect, onClose, availability }: UnitInfoWindowProps) {
   const streetViewUrl = generateStreetViewUrl(unit.lat, unit.lng, unit.streetViewHeading)
+  const currentPeriod = getCurrentAvailability(availability)
+  const statusDisplay = currentPeriod ? getStatusDisplay(currentPeriod.status) : null
 
   const typeColors: Record<string, string> = {
     billboard: 'bg-blue-100 text-blue-800',
@@ -84,6 +88,32 @@ export default function UnitInfoWindow({ unit, isSelected, onToggleSelect, onClo
             </span>
           </div>
         </div>
+
+        {/* Availability Status */}
+        {statusDisplay && currentPeriod && (
+          <div className={`mb-3 p-2 rounded-lg border ${statusDisplay.borderColor} bg-opacity-10`}
+               style={{ backgroundColor: `${statusDisplay.dotColor.replace('bg-', '')}10` }}>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className={`w-2 h-2 rounded-full ${statusDisplay.dotColor}`} />
+                <span className={`text-xs font-medium ${statusDisplay.color.split(' ')[1]}`}>
+                  {statusDisplay.label}
+                </span>
+              </div>
+              <span className="text-xs text-gray-500">
+                {formatDateRange(currentPeriod.startDate, currentPeriod.endDate)}
+              </span>
+            </div>
+            {currentPeriod.client && (
+              <p className="text-xs text-gray-600 mt-1">
+                Client: {currentPeriod.client}
+              </p>
+            )}
+            {currentPeriod.notes && (
+              <p className="text-xs text-gray-500 mt-1 italic">{currentPeriod.notes}</p>
+            )}
+          </div>
+        )}
 
         {/* Geopath ID */}
         {unit.geopathId && unit.geopathId !== 'TBD' && (

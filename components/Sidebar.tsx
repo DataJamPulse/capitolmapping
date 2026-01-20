@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { Unit } from '@/lib/types'
+import { Unit, UnitAvailability, AvailabilityStatus } from '@/lib/types'
+import { getCurrentAvailability, getStatusDisplay } from '@/lib/availability'
 
 interface SidebarProps {
   units: Unit[]
@@ -12,10 +13,14 @@ interface SidebarProps {
   onMarketFilterChange: (market: string) => void
   typeFilter: string
   onTypeFilterChange: (type: string) => void
+  availabilityFilter: string
+  onAvailabilityFilterChange: (status: string) => void
   onLocationSearch: (lat: number, lng: number) => void
   searchLocation: { lat: number; lng: number } | null
   onClearLocationSearch: () => void
   isGoogleLoaded?: boolean
+  availability: Map<string, UnitAvailability>
+  onOpenAvailImport: () => void
 }
 
 export default function Sidebar({
@@ -27,10 +32,14 @@ export default function Sidebar({
   onMarketFilterChange,
   typeFilter,
   onTypeFilterChange,
+  availabilityFilter,
+  onAvailabilityFilterChange,
   onLocationSearch,
   searchLocation,
   onClearLocationSearch,
   isGoogleLoaded = false,
+  availability,
+  onOpenAvailImport,
 }: SidebarProps) {
   const [searchAddress, setSearchAddress] = useState('')
   const [isSearching, setIsSearching] = useState(false)
@@ -66,6 +75,13 @@ export default function Sidebar({
   const markets = Array.from(new Set(units.map(u => u.market))).sort()
   const types = Array.from(new Set(units.map(u => u.type))).sort()
 
+  // Helper to get unit's current availability status
+  const getUnitStatus = (unitId: string): AvailabilityStatus | null => {
+    const unitAvail = availability.get(unitId)
+    const currentPeriod = getCurrentAvailability(unitAvail)
+    return currentPeriod?.status || null
+  }
+
   // Filter units
   let filteredUnits = units
   if (marketFilter) {
@@ -73,6 +89,15 @@ export default function Sidebar({
   }
   if (typeFilter) {
     filteredUnits = filteredUnits.filter(u => u.type === typeFilter)
+  }
+  if (availabilityFilter) {
+    filteredUnits = filteredUnits.filter(u => {
+      const status = getUnitStatus(u.id)
+      if (availabilityFilter === 'available') {
+        return status === 'available' || status === null // No data = available
+      }
+      return status === availabilityFilter
+    })
   }
 
   // Sort by distance if location search is active
@@ -237,6 +262,44 @@ export default function Sidebar({
             </select>
           </div>
         </div>
+
+        {/* Availability Row */}
+        <div className="flex items-end gap-2">
+          <div className="flex-1">
+            <label className="block text-xs font-medium text-gray-500 mb-1">Availability</label>
+            <select
+              value={availabilityFilter}
+              onChange={(e) => onAvailabilityFilterChange(e.target.value)}
+              className="w-full px-2 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-capitol-red"
+            >
+              <option value="">All Status</option>
+              <option value="available">Available</option>
+              <option value="sold">Sold</option>
+              <option value="hold">On Hold</option>
+              <option value="pending">Pending</option>
+            </select>
+          </div>
+          <button
+            onClick={onOpenAvailImport}
+            className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5"
+            title="Import availability from CSV"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+            </svg>
+            Import
+          </button>
+        </div>
+
+        {/* Availability data indicator */}
+        {availability.size > 0 && (
+          <div className="flex items-center gap-2 px-2 py-1.5 bg-green-50 border border-green-200 rounded-lg text-xs text-green-700">
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>Availability loaded for {availability.size} units</span>
+          </div>
+        )}
       </div>
 
       {/* Results Count */}
@@ -268,6 +331,10 @@ export default function Sidebar({
       <div className="flex-1 overflow-y-auto">
         {filteredUnits.map(unit => {
           const distance = getDistanceMiles(unit)
+          const unitAvail = availability.get(unit.id)
+          const currentPeriod = getCurrentAvailability(unitAvail)
+          const statusDisplay = currentPeriod ? getStatusDisplay(currentPeriod.status) : null
+
           return (
             <div
               key={unit.id}
@@ -296,11 +363,20 @@ export default function Sidebar({
                   )}
                 </button>
 
-                {/* Icon */}
-                <div className="w-10 h-10 bg-capitol-red/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg className="w-5 h-5 text-capitol-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={typeIcons[unit.type] || typeIcons.billboard} />
-                  </svg>
+                {/* Icon with availability indicator */}
+                <div className="relative">
+                  <div className="w-10 h-10 bg-capitol-red/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-capitol-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={typeIcons[unit.type] || typeIcons.billboard} />
+                    </svg>
+                  </div>
+                  {/* Availability dot indicator */}
+                  {statusDisplay && (
+                    <span
+                      className={`absolute -top-1 -right-1 w-3 h-3 rounded-full border-2 border-white ${statusDisplay.dotColor}`}
+                      title={statusDisplay.label}
+                    />
+                  )}
                 </div>
 
                 {/* Details */}
@@ -310,6 +386,12 @@ export default function Sidebar({
                     <span className="text-xs px-1.5 py-0.5 bg-gray-100 rounded text-gray-500 capitalize">
                       {unit.type}
                     </span>
+                    {/* Availability badge */}
+                    {statusDisplay && (
+                      <span className={`text-xs px-1.5 py-0.5 rounded font-medium ${statusDisplay.color}`}>
+                        {statusDisplay.label}
+                      </span>
+                    )}
                   </div>
                   <p className="text-xs text-gray-500 truncate">{unit.market}</p>
                   <div className="flex items-center gap-2 mt-1">
@@ -319,6 +401,15 @@ export default function Sidebar({
                         <span className="text-xs text-gray-300">|</span>
                         <span className="text-xs text-capitol-red font-medium">
                           {distance < 1 ? `${(distance * 5280).toFixed(0)} ft` : `${distance.toFixed(1)} mi`}
+                        </span>
+                      </>
+                    )}
+                    {/* Show client if sold/hold */}
+                    {currentPeriod?.client && (
+                      <>
+                        <span className="text-xs text-gray-300">|</span>
+                        <span className="text-xs text-gray-500 truncate" title={currentPeriod.client}>
+                          {currentPeriod.client}
                         </span>
                       </>
                     )}
