@@ -22,9 +22,9 @@ export default function UnitInfoWindow({ unit, isSelected, onToggleSelect, onClo
   }
 
   return (
-    <div className="w-80 bg-white rounded-xl overflow-hidden shadow-xl">
+    <div className="w-[280px] sm:w-80 bg-white rounded-xl overflow-hidden shadow-xl">
       {/* Image */}
-      <div className="relative h-40 bg-capitol-light">
+      <div className="relative h-32 sm:h-40 bg-capitol-light">
         <img
           src={unit.image}
           alt={unit.name}
@@ -43,9 +43,10 @@ export default function UnitInfoWindow({ unit, isSelected, onToggleSelect, onClo
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 w-8 h-8 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center text-white transition-colors"
+          className="absolute top-1 right-1 w-10 h-10 sm:w-8 sm:h-8 bg-black/50 hover:bg-black/70 active:bg-black/80 rounded-full flex items-center justify-center text-white transition-colors"
+          aria-label="Close"
         >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
@@ -102,7 +103,7 @@ export default function UnitInfoWindow({ unit, isSelected, onToggleSelect, onClo
             href={streetViewUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 bg-gray-100 hover:bg-gray-200 text-capitol-gray px-3 py-2 rounded-lg font-medium text-sm transition-colors flex items-center justify-center gap-2"
+            className="flex-1 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 text-capitol-gray px-3 py-3 sm:py-2 rounded-lg font-medium text-sm transition-colors flex items-center justify-center gap-2 min-h-[44px]"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -112,10 +113,10 @@ export default function UnitInfoWindow({ unit, isSelected, onToggleSelect, onClo
           </a>
           <button
             onClick={() => onToggleSelect(unit.id)}
-            className={`flex-1 px-3 py-2 rounded-lg font-medium text-sm transition-colors flex items-center justify-center gap-2 ${
+            className={`flex-1 px-3 py-3 sm:py-2 rounded-lg font-medium text-sm transition-colors flex items-center justify-center gap-2 min-h-[44px] ${
               isSelected
-                ? 'bg-green-500 text-white'
-                : 'bg-capitol-red hover:bg-capitol-red-dark text-white'
+                ? 'bg-green-500 active:bg-green-600 text-white'
+                : 'bg-capitol-red hover:bg-capitol-red-dark active:bg-capitol-red-dark text-white'
             }`}
           >
             {isSelected ? (
