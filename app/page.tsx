@@ -5,7 +5,8 @@ import Header from '@/components/Header'
 import MapContainer from '@/components/MapContainer'
 import Sidebar from '@/components/Sidebar'
 import ShareModal from '@/components/ShareModal'
-import { Unit } from '@/lib/types'
+import AvailabilityImport from '@/components/AvailabilityImport'
+import { Unit, UnitAvailability } from '@/lib/types'
 import inventoryData from '@/data/inventory.json'
 
 export default function Home() {
@@ -13,10 +14,13 @@ export default function Home() {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
   const [marketFilter, setMarketFilter] = useState('')
   const [typeFilter, setTypeFilter] = useState('')
+  const [availabilityFilter, setAvailabilityFilter] = useState('')
   const [searchLocation, setSearchLocation] = useState<{ lat: number; lng: number } | null>(null)
   const [isShareModalOpen, setIsShareModalOpen] = useState(false)
+  const [isAvailImportOpen, setIsAvailImportOpen] = useState(false)
   const [focusedUnit, setFocusedUnit] = useState<Unit | null>(null)
   const [isGoogleLoaded, setIsGoogleLoaded] = useState(false)
+  const [availability, setAvailability] = useState<Map<string, UnitAvailability>>(new Map())
 
   const handleToggleSelect = useCallback((unitId: string) => {
     setSelectedIds(prev => {
@@ -40,6 +44,16 @@ export default function Home() {
 
   const handleClearLocationSearch = useCallback(() => {
     setSearchLocation(null)
+  }, [])
+
+  const handleAvailabilityImport = useCallback((imported: Map<string, UnitAvailability>) => {
+    setAvailability(prev => {
+      const merged = new Map(prev)
+      imported.forEach((value, key) => {
+        merged.set(key, value)
+      })
+      return merged
+    })
   }, [])
 
   // Filter units for map display
@@ -71,10 +85,14 @@ export default function Home() {
           onMarketFilterChange={setMarketFilter}
           typeFilter={typeFilter}
           onTypeFilterChange={setTypeFilter}
+          availabilityFilter={availabilityFilter}
+          onAvailabilityFilterChange={setAvailabilityFilter}
           onLocationSearch={handleLocationSearch}
           searchLocation={searchLocation}
           onClearLocationSearch={handleClearLocationSearch}
           isGoogleLoaded={isGoogleLoaded}
+          availability={availability}
+          onOpenAvailImport={() => setIsAvailImportOpen(true)}
         />
 
         {/* Map */}
@@ -87,6 +105,7 @@ export default function Home() {
             onFocusedUnitChange={setFocusedUnit}
             searchLocation={searchLocation}
             onGoogleLoaded={setIsGoogleLoaded}
+            availability={availability}
           />
         </div>
       </div>
@@ -98,6 +117,15 @@ export default function Home() {
         selectedUnits={selectedUnits}
         allUnits={units}
       />
+
+      {/* Availability Import Modal */}
+      {isAvailImportOpen && (
+        <AvailabilityImport
+          onImport={handleAvailabilityImport}
+          onClose={() => setIsAvailImportOpen(false)}
+          unitIds={units.map(u => u.id)}
+        />
+      )}
     </div>
   )
 }
