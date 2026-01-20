@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useState, useRef, useEffect } from 'react'
+import { useCallback, useState, useRef, useEffect, useMemo } from 'react'
 import { GoogleMap, useJsApiLoader, MarkerF, InfoWindowF, CircleF, TrafficLayer } from '@react-google-maps/api'
 import { Unit } from '@/lib/types'
 import UnitInfoWindow from './UnitInfoWindow'
@@ -31,6 +31,8 @@ const defaultCenter = {
 }
 
 const defaultZoom = 4
+const FOCUSED_UNIT_ZOOM = 15
+const SEARCH_LOCATION_ZOOM = 11
 
 // Map styling for Capitol branding
 const mapStyles = [
@@ -150,6 +152,7 @@ const DISTANCE_OPTIONS = [
 ]
 
 interface NearbyPOI {
+  id: string
   name: string
   type: string
   lat: number
@@ -173,6 +176,7 @@ export default function MapContainer({
   const [showPOIPanel, setShowPOIPanel] = useState(false)
   const [nearbyPOIs, setNearbyPOIs] = useState<NearbyPOI[]>([])
   const [loadingPOIs, setLoadingPOIs] = useState(false)
+  const [searchError, setSearchError] = useState<string | null>(null)
   const [selectedPOITypes, setSelectedPOITypes] = useState<string[]>([])
   const [selectedDistance, setSelectedDistance] = useState(402) // Default 1/4 mile
   const [searchRadius, setSearchRadius] = useState<number | null>(null) // For circle display
@@ -195,15 +199,16 @@ export default function MapContainer({
   useEffect(() => {
     if (focusedUnit && mapRef.current) {
       mapRef.current.panTo({ lat: focusedUnit.lat, lng: focusedUnit.lng })
-      mapRef.current.setZoom(15)
+      mapRef.current.setZoom(FOCUSED_UNIT_ZOOM)
       setActiveMarker(focusedUnit.id)
     }
   }, [focusedUnit])
 
-  // Clear POIs when focused unit changes
+  // Clear POIs and errors when focused unit changes
   useEffect(() => {
     setNearbyPOIs([])
     setSearchRadius(null)
+    setSearchError(null)
   }, [focusedUnit])
 
   // Fetch POIs on demand (triggered by Search button)
@@ -213,50 +218,65 @@ export default function MapContainer({
     }
 
     setLoadingPOIs(true)
+    setSearchError(null)
     setSearchRadius(selectedDistance)
-    const allPOIs: NearbyPOI[] = []
     const service = new google.maps.places.PlacesService(mapRef.current)
     const location = new google.maps.LatLng(focusedUnit.lat, focusedUnit.lng)
 
     // Only search selected POI types
     const categoriesToSearch = POI_CATEGORIES.filter(c => selectedPOITypes.includes(c.type))
 
-    for (const category of categoriesToSearch) {
-      try {
-        const results = await new Promise<google.maps.places.PlaceResult[]>((resolve) => {
-          service.nearbySearch(
-            {
-              location,
-              radius: selectedDistance,
-              type: category.type,
-            },
-            (results, status) => {
-              if (status === google.maps.places.PlacesServiceStatus.OK && results) {
-                resolve(results)
-              } else {
-                resolve([])
-              }
+    // Search all categories in parallel for faster results
+    const searchPromises = categoriesToSearch.map(category =>
+      new Promise<{ category: typeof category; results: google.maps.places.PlaceResult[]; error?: boolean }>((resolve) => {
+        service.nearbySearch(
+          {
+            location,
+            radius: selectedDistance,
+            type: category.type,
+          },
+          (results, status) => {
+            if (status === google.maps.places.PlacesServiceStatus.OK && results) {
+              resolve({ category, results })
+            } else if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
+              resolve({ category, results: [] })
+            } else {
+              console.error(`Error fetching ${category.type}: ${status}`)
+              resolve({ category, results: [], error: true })
             }
-          )
-        })
-
-        results.forEach((place) => {
-          if (place.geometry?.location) {
-            allPOIs.push({
-              name: place.name || 'Unknown',
-              type: category.type,
-              lat: place.geometry.location.lat(),
-              lng: place.geometry.location.lng(),
-              color: category.color,
-            })
           }
-        })
-      } catch (e) {
-        console.error(`Error fetching ${category.type}:`, e)
+        )
+      })
+    )
+
+    const searchResults = await Promise.all(searchPromises)
+
+    // Collect all POIs and track errors
+    const allPOIs: NearbyPOI[] = []
+    const failedCategories: string[] = []
+
+    searchResults.forEach(({ category, results, error }) => {
+      if (error) {
+        failedCategories.push(category.label)
       }
-    }
+      results.forEach((place) => {
+        if (place.geometry?.location && place.place_id) {
+          allPOIs.push({
+            id: place.place_id,
+            name: place.name || 'Unknown',
+            type: category.type,
+            lat: place.geometry.location.lat(),
+            lng: place.geometry.location.lng(),
+            color: category.color,
+          })
+        }
+      })
+    })
 
     setNearbyPOIs(allPOIs)
+    if (failedCategories.length > 0) {
+      setSearchError(`Some searches failed: ${failedCategories.join(', ')}`)
+    }
     setLoadingPOIs(false)
   }
 
@@ -282,7 +302,7 @@ export default function MapContainer({
   useEffect(() => {
     if (searchLocation && mapRef.current) {
       mapRef.current.panTo(searchLocation)
-      mapRef.current.setZoom(11)
+      mapRef.current.setZoom(SEARCH_LOCATION_ZOOM)
     }
   }, [searchLocation])
 
@@ -304,22 +324,28 @@ export default function MapContainer({
     onFocusedUnitChange?.(null)
   }
 
-  // Create custom marker icon
-  const createMarkerIcon = (unit: Unit) => {
-    const color = markerColors[unit.type] || markerColors.billboard
-    const isSelected = selectedIds.has(unit.id)
-    const scale = isSelected ? 1.3 : 1
+  // Memoize marker icons to avoid recreating on every render
+  const markerIcons = useMemo(() => {
+    if (!isLoaded) return new Map<string, google.maps.Symbol>()
 
-    return {
-      path: 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z',
-      fillColor: isSelected ? '#10B981' : color,
-      fillOpacity: 1,
-      strokeColor: '#ffffff',
-      strokeWeight: 2,
-      scale: scale,
-      anchor: new google.maps.Point(12, 24),
-    }
-  }
+    const icons = new Map<string, google.maps.Symbol>()
+    units.forEach(unit => {
+      const color = markerColors[unit.type] || markerColors.billboard
+      const isSelected = selectedIds.has(unit.id)
+      const scale = isSelected ? 1.3 : 1
+
+      icons.set(unit.id, {
+        path: 'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z',
+        fillColor: isSelected ? '#10B981' : color,
+        fillOpacity: 1,
+        strokeColor: '#ffffff',
+        strokeWeight: 2,
+        scale: scale,
+        anchor: new google.maps.Point(12, 24),
+      })
+    })
+    return icons
+  }, [units, selectedIds, isLoaded])
 
   if (loadError) {
     return (
@@ -402,15 +428,15 @@ export default function MapContainer({
             key={unit.id}
             position={{ lat: unit.lat, lng: unit.lng }}
             onClick={() => handleMarkerClick(unit)}
-            icon={createMarkerIcon(unit)}
+            icon={markerIcons.get(unit.id)}
             title={unit.name}
           />
         ))}
 
         {/* Nearby POI markers */}
-        {nearbyPOIs.map((poi, index) => (
+        {nearbyPOIs.map((poi) => (
           <MarkerF
-            key={`poi-${index}-${poi.name}`}
+            key={`poi-${poi.id}`}
             position={{ lat: poi.lat, lng: poi.lng }}
             icon={{
               path: google.maps.SymbolPath.CIRCLE,
@@ -586,6 +612,18 @@ export default function MapContainer({
                   </>
                 )}
               </button>
+
+              {/* Error feedback */}
+              {searchError && (
+                <div className="mt-3 p-2 bg-amber-50 border border-amber-200 rounded-lg">
+                  <div className="flex items-start gap-2">
+                    <svg className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <p className="text-xs text-amber-700">{searchError}</p>
+                  </div>
+                </div>
+              )}
 
               {/* Results */}
               {nearbyPOIs.length > 0 && (
